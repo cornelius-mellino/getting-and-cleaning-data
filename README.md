@@ -61,8 +61,6 @@ All in numeric fraction ranged [-1 to +1]
 
 The repository contains the following files:
 
-- 'README.txt'
-
 - 'README.md'
 
 - 'final_data_set_with_averages.txt' : Data set files that contains average of each measured variables for each Subject and Activity
