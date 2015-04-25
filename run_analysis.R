@@ -1,25 +1,17 @@
 # 1. Merges the training and the test sets to create one data set.
 
 # Load the experiment data
-temporaryTable1 <- read.table("train/X_train.txt")
-temporaryTable2 <- read.table("test/X_test.txt")
-X <- rbind(temporaryTable1, temporaryTable2)
-
+X <- rbind(read.table("train/X_train.txt"), read.table("test/X_test.txt"))
 # Load the subject data
-temporaryTable1 <- read.table("train/subject_train.txt")
-temporaryTable2 <- read.table("test/subject_test.txt")
-S <- rbind(temporaryTable1, temporaryTable2)
-
+S <- rbind(read.table("train/subject_train.txt"), read.table("test/subject_test.txt"))
 # Load the activity
-temporaryTable1 <- read.table("train/y_train.txt")
-temporaryTable2 <- read.table("test/y_test.txt")
-Y <- rbind(temporaryTable1, temporaryTable2)
+Y <- rbind(read.table("train/y_train.txt"), read.table("test/y_test.txt"))
 
 # 2. Extracts only the measurements on the mean and standard deviation for each measurement.
 
 # Load the features
 features <- read.table("features.txt")
-# Extract variables that related to mean and std
+# Extract variables that related to mean and stdev (those with -mean() and -std())
 varsIndex <- grep("-mean\\(\\)|-std\\(\\)", features[, 2])
 X <- X[, varsIndex]
 names(X) <- features[varsIndex, 2]
@@ -42,15 +34,19 @@ names(Y) <- c("ActivityId", "Activity")
 # Combine the tables and save to final_data_set.txt file
 names(S) <- "Subject"
 dataSet <- cbind(S, Y, X)
-write.table(dataSet, "final_data_set.txt")
 
 # 5. Creates a 2nd, independent tidy data set with the average of each variable for each activity and each subject.
 
 # Setup the necessary parameters to run the process
-uniqueSubjects = unique(S)[,1]
-numSubjects = length(uniqueSubjects)
+# Find all subjects, remove the duplication
+allSubjects = unique(S)[,1]
+# Get the total amount of subjects
+numSubjects = length(allSubjects)
+# Get the total amount of activities
 numActivities = length(activityLabels[,1])
+# Set the total number of columns, make it the same with dataSet total columns
 numCols = dim(dataSet)[2]
+# Prepare the rows
 result = dataSet[1:(numSubjects*numActivities), ]
 
 # Start from the first row
