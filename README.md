@@ -63,6 +63,8 @@ The repository contains the following files:
 
 - 'README.md'
 
+- 'Codebook.md'
+
 - 'final_data_set_with_averages.txt' : Data set files that contains average of each measured variables for each Subject and Activity
 
 - 'run_analysis.R' : The R script file to process the data
