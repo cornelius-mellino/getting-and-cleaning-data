@@ -46,15 +46,18 @@ numSubjects = length(allSubjects)
 numActivities = length(activityLabels[,1])
 # Set the total number of columns, make it the same with dataSet total columns
 numCols = dim(dataSet)[2]
-# Prepare the rows
-result = dataSet[1:(numSubjects*numActivities), ]
+# Set the total number of rows
+numRows = numSubjects*numActivities
+# Prepare the dataframe, just copy from the dataSet to keep with the format
+result = dataSet[1:numRows, ]
 
 # Start from the first row
 row = 1
+# Loop by the subjects and activities, and calculate the average or mean
 for (s in 1:numSubjects) {
   for (a in 1:numActivities) {
     # Add subject at the 1st column
-    result[row, 1] = uniqueSubjects[s]
+    result[row, 1] = allSubjects[s]
     # Add activity id at the 2nd column
     result[row, 2] = a
     # Add activity name at the 3rd column
